@@ -1,0 +1,16 @@
+{
+	"name": "dataengineer23india",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Disabled",
+			"editable": true,
+			"isExplicitlySet": false
+		}
+	},
+	"location": "centralindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "9db43623-8571-46dd-ae3d-246a0d26298f",
+		"tenantId": "94d8c36a-deb1-49bf-85f8-ce9c92fde898"
+	}
+}
