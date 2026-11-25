@@ -141,7 +141,7 @@
 				"typeProperties": {
 					"variableName": "table_name",
 					"value": {
-						"value": "@activity('Get_ADF_Config').output.firstRow.tablename",
+						"value": "@activity('Get_ADF_Config').output.firstRow.Table_name",
 						"type": "Expression"
 					}
 				}
