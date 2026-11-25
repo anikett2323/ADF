@@ -16,10 +16,6 @@
 				"name": "joining_date",
 				"type": "nvarchar"
 			}
-		],
-		"typeProperties": {
-			"schema": "dbo",
-			"table": "Employee_dest"
-		}
+		]
 	}
 }
