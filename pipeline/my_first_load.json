@@ -7,7 +7,7 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Lookup1",
+						"activity": "Set variable1",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -78,12 +78,18 @@
 				"outputs": [
 					{
 						"referenceName": "AzureSqlTable1",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"tablename": {
+								"value": "@variables('table_name')",
+								"type": "Expression"
+							}
+						}
 					}
 				]
 			},
 			{
-				"name": "Lookup1",
+				"name": "Get_ADF_Config",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
@@ -97,16 +103,55 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
+						"sqlReaderStoredProcedureName": "[dbo].[Get_ADF_config]",
+						"storedProcedureParameters": {
+							"DataFactory": {
+								"type": "String",
+								"value": {
+									"value": "@pipeline().DataFactory",
+									"type": "Expression"
+								}
+							}
+						},
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
 					"dataset": {
-						"referenceName": "Source",
+						"referenceName": "AzureSqlTable2",
 						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Get_ADF_Config",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "table_name",
+					"value": {
+						"value": "@activity('Get_ADF_Config').output.firstRow.tablename",
+						"type": "Expression"
 					}
 				}
 			}
 		],
+		"variables": {
+			"table_name": {
+				"type": "String"
+			}
+		},
 		"annotations": []
 	}
 }
